@@ -1,0 +1,16 @@
+# Created by https://www.gitignore.io/api/node,firebase
+
+### Firebase ###
+.idea
+**/node_modules/*
+**/.firebaserc
+### Node ###
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+
+# End of https://www.gitignore.io/api/node,firebase

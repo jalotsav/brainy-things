@@ -1,0 +1,50 @@
+{
+  "jalotsavHome" : {
+    "rooms" : {
+      "-L6LiQyRcTVDucCW22Wt" : {
+        "devices" : {
+          "-L6LiQyv5uZDzuOBexhz" : {
+            "gpio" : "GPIO6_IO12",
+            "id" : "-L6LiQyv5uZDzuOBexhz",
+            "name" : "main light",
+            "traits" : {
+              "interval" : 0,
+              "isOn" : true
+            },
+            "type" : "LIGHT"
+          },
+          "-L6LiQyz0q76jdOQadND" : {
+            "gpio" : "GPIO6_IO13",
+            "id" : "-L6LiQyz0q76jdOQadND",
+            "name" : "mini light",
+            "traits" : {
+              "interval" : 0,
+              "isOn" : false
+            },
+            "type" : "LIGHT"
+          }
+        },
+        "id" : "-L6LiQyRcTVDucCW22Wt",
+        "name" : "my living",
+        "type" : "LIVING"
+      },
+      "-L6LinRRKzxEK6xE-tCW" : {
+        "devices" : {
+          "-L6LinRUXPDcgM9uaJy_" : {
+            "gpio" : "GPIO1_IO10",
+            "id" : "-L6LinRUXPDcgM9uaJy_",
+            "name" : "mini led",
+            "traits" : {
+              "interval" : 0,
+              "isOn" : false
+            },
+            "type" : "LIGHT"
+          }
+        },
+        "id" : "-L6LinRRKzxEK6xE-tCW",
+        "name" : "my bed",
+        "type" : "BED"
+      }
+    }
+  }
+}
