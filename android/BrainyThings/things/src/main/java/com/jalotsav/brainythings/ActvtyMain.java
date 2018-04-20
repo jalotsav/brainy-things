@@ -66,6 +66,7 @@ public class ActvtyMain extends Activity implements AppConstants {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        mPeripheralService = new PeripheralManagerService();
         //Check for the available GPIOs
         if (mPeripheralService.getGpioList().isEmpty()) {
             Log.e(TAG, "No GPIO port available on this device.");
@@ -86,7 +87,6 @@ public class ActvtyMain extends Activity implements AppConstants {
     private void openGpioAll() {
 
         try {
-            mPeripheralService = new PeripheralManagerService();
 
             mGpio6IO13 = mPeripheralService.openGpio(PIN_NXPMX7D_GPIO6_IO13);
             mGpio6IO12 = mPeripheralService.openGpio(PIN_NXPMX7D_GPIO6_IO12);
@@ -111,49 +111,51 @@ public class ActvtyMain extends Activity implements AppConstants {
                 for(DataSnapshot roomSnapshot : dataSnapshot.getChildren()) {
 
                     MdlRooms objMdlRoom = roomSnapshot.getValue(MdlRooms.class);
-                    Map<String, MdlDevices> objMap = objMdlRoom.getDevices();
-                    for(MdlDevices objMdlDevices : objMap.values()) {
+                    if(objMdlRoom.getDevices() != null) {
+                        Map<String, MdlDevices> objMap = objMdlRoom.getDevices();
+                        for (MdlDevices objMdlDevices : objMap.values()) {
 
-                        switch (objMdlDevices.getGpio()) {
-                            case PIN_NXPMX7D_GPIO6_IO12:
+                            switch (objMdlDevices.getGpio()) {
+                                case PIN_NXPMX7D_GPIO6_IO12:
 
-                                if(mGpio6IO12 == null)
-                                    continue;
+                                    if (mGpio6IO12 == null)
+                                        continue;
 
-                                try {
-                                    mGpio6IO12.setValue(objMdlDevices.getTraits().isOn());
-                                    Log.i(TAG, PIN_NXPMX7D_GPIO6_IO12 + " isOn Traits change to " + objMdlDevices.getTraits().isOn());
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                    Log.e(TAG, "Error on " + PIN_NXPMX7D_GPIO6_IO12 + " PeripheralIO API: ", e);
-                                }
-                                break;
-                            case PIN_NXPMX7D_GPIO6_IO13:
+                                    try {
+                                        mGpio6IO12.setValue(objMdlDevices.getTraits().isOn());
+                                        Log.i(TAG, PIN_NXPMX7D_GPIO6_IO12 + " isOn Traits change to " + objMdlDevices.getTraits().isOn());
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                        Log.e(TAG, "Error on " + PIN_NXPMX7D_GPIO6_IO12 + " PeripheralIO API: ", e);
+                                    }
+                                    break;
+                                case PIN_NXPMX7D_GPIO6_IO13:
 
-                                if(mGpio6IO13 == null)
-                                    continue;
+                                    if (mGpio6IO13 == null)
+                                        continue;
 
-                                try {
-                                    mGpio6IO13.setValue(objMdlDevices.getTraits().isOn());
-                                    Log.i(TAG, PIN_NXPMX7D_GPIO6_IO13 + " isOn Traits change to " + objMdlDevices.getTraits().isOn());
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                    Log.e(TAG, "Error on " + PIN_NXPMX7D_GPIO6_IO13 + " PeripheralIO API: ", e);
-                                }
-                                break;
-                            case PIN_NXPMX7D_GPIO1_IO10:
+                                    try {
+                                        mGpio6IO13.setValue(objMdlDevices.getTraits().isOn());
+                                        Log.i(TAG, PIN_NXPMX7D_GPIO6_IO13 + " isOn Traits change to " + objMdlDevices.getTraits().isOn());
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                        Log.e(TAG, "Error on " + PIN_NXPMX7D_GPIO6_IO13 + " PeripheralIO API: ", e);
+                                    }
+                                    break;
+                                case PIN_NXPMX7D_GPIO1_IO10:
 
-                                if(mGpio1IO10 == null)
-                                    continue;
+                                    if (mGpio1IO10 == null)
+                                        continue;
 
-                                try {
-                                    mGpio1IO10.setValue(objMdlDevices.getTraits().isOn());
-                                    Log.i(TAG, PIN_NXPMX7D_GPIO1_IO10 + " isOn Traits change to " + objMdlDevices.getTraits().isOn());
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                    Log.e(TAG, "Error on " + PIN_NXPMX7D_GPIO1_IO10 + " PeripheralIO API: ", e);
-                                }
-                                break;
+                                    try {
+                                        mGpio1IO10.setValue(objMdlDevices.getTraits().isOn());
+                                        Log.i(TAG, PIN_NXPMX7D_GPIO1_IO10 + " isOn Traits change to " + objMdlDevices.getTraits().isOn());
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                        Log.e(TAG, "Error on " + PIN_NXPMX7D_GPIO1_IO10 + " PeripheralIO API: ", e);
+                                    }
+                                    break;
+                            }
                         }
                     }
                 }
