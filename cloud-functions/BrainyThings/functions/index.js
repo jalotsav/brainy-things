@@ -54,7 +54,7 @@ exports.thingsExecute = functions.https.onRequest((request, response) => {
 
             snapshot.forEach(function (childSnapshot) {
 
-                if (paramThingsRooms === childSnapshot.val().name) {
+                if (paramThingsRooms === childSnapshot.val().name.toLowerCase()) {
 
                     console.log('Room name matched.');
 
@@ -62,7 +62,7 @@ exports.thingsExecute = functions.https.onRequest((request, response) => {
                     var devicesSnapshot = childSnapshot.child(strings.general.fireDatabase.childDevices);
                     devicesSnapshot.forEach(function (childDeviceSnapshot) {
 
-                        if (paramThingsDevices === childDeviceSnapshot.val().name) {
+                        if (paramThingsDevices === childDeviceSnapshot.val().name.toLowerCase()) {
 
                             console.log('Device name matched');
 
@@ -77,7 +77,7 @@ exports.thingsExecute = functions.https.onRequest((request, response) => {
                                     .child(strings.general.fireDatabase.childTraits);
 
                                 // Update Traits isOn value and generate response and send back to assistant
-                                traitsIsOnRef.update({ isOn: deviceTraitsIsOn }).then(function () {
+                                traitsIsOnRef.update({ isOn: deviceTraitsIsOn, on: deviceTraitsIsOn }).then(function () {
 
                                     console.log('Device traits isOn change to ', deviceTraitsIsOn);
                                     fulfillmentMsg = sprintf(getRandomValue(strings.richResponse.fulfillmentTurning), paramThingsRooms, paramThingsDevices, paramThingsTraits);
