@@ -18,10 +18,11 @@ package com.jalotsav.brainythings;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.google.android.things.pio.Gpio;
-import com.google.android.things.pio.PeripheralManagerService;
+import com.google.android.things.pio.PeripheralManager;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -57,7 +58,7 @@ public class ActvtyMain extends Activity implements AppConstants {
 
     private static final String TAG = ActvtyMain.class.getSimpleName();
 
-    PeripheralManagerService mPeripheralService;
+    PeripheralManager mPeripheralManager;
     Gpio mGpio6IO13, mGpio6IO12, mGpio1IO10;
     FirebaseDatabase mDatabase;
     DatabaseReference mJalosavHomeRef, mRoomRef;
@@ -66,9 +67,9 @@ public class ActvtyMain extends Activity implements AppConstants {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mPeripheralService = new PeripheralManagerService();
+        mPeripheralManager = PeripheralManager.getInstance();
         //Check for the available GPIOs
-        if (mPeripheralService.getGpioList().isEmpty()) {
+        if (mPeripheralManager.getGpioList().isEmpty()) {
             Log.e(TAG, "No GPIO port available on this device.");
             finish();
             return;
@@ -88,9 +89,9 @@ public class ActvtyMain extends Activity implements AppConstants {
 
         try {
 
-            mGpio6IO13 = mPeripheralService.openGpio(PIN_NXPMX7D_GPIO6_IO13);
-            mGpio6IO12 = mPeripheralService.openGpio(PIN_NXPMX7D_GPIO6_IO12);
-            mGpio1IO10 = mPeripheralService.openGpio(PIN_NXPMX7D_GPIO1_IO10);
+            mGpio6IO13 = mPeripheralManager.openGpio(PIN_NXPMX7D_GPIO6_IO13);
+            mGpio6IO12 = mPeripheralManager.openGpio(PIN_NXPMX7D_GPIO6_IO12);
+            mGpio1IO10 = mPeripheralManager.openGpio(PIN_NXPMX7D_GPIO1_IO10);
 
             mGpio6IO13.setDirection(Gpio.DIRECTION_OUT_INITIALLY_LOW);
             mGpio6IO12.setDirection(Gpio.DIRECTION_OUT_INITIALLY_LOW);
@@ -106,7 +107,7 @@ public class ActvtyMain extends Activity implements AppConstants {
 
         mRoomRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 for(DataSnapshot roomSnapshot : dataSnapshot.getChildren()) {
 
@@ -162,8 +163,9 @@ public class ActvtyMain extends Activity implements AppConstants {
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
+                Log.e(TAG, "setFirebaseEventListener - onCancelled: " + databaseError.getMessage());
             }
         });
     }
