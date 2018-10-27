@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Brainy Things</string>
+    <string name="imgcd_image">Content description of images</string>
+    <string name="rooms_appear_here">Rooms appear here</string>
+
+    <!--Devices-->
+    <string name="devices_sml">Devices</string>
+    <string name="devices_appear_here">Devices appear here</string>
+</resources>
